@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Terms from './pages/Terms';
-import Pricelist from './pages/Pricelist';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/login";
+import Terms from "./pages/Terms";
+import Pricelist from "./pages/Pricelist";
 
 function App() {
   return (
