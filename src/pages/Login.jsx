@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
@@ -36,7 +35,7 @@ function Login() {
 
   // Handle login via backend server
   const handleLogin = async () => {
-    setErrorMsg(""); // clear previous errors
+    setErrorMsg("");
     if (!email || !password) {
       setErrorMsg("Please enter email and password");
       return;
