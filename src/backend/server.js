@@ -1,21 +1,21 @@
-// server.js
+import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import { createClient } from "@supabase/supabase-js";
 
+dotenv.config();
+
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", methods: ["GET", "POST"] }));
 app.use(express.json());
 
-// Supabase client (replace with your actual Service Role Key)
 const supabase = createClient(
-  "https://dzigxtdsyruphaoktflc.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6aWd4dGRzeXJ1cGhhb2t0ZmxjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mjc5MjI3MywiZXhwIjoyMDc4MzY4MjczfQ.B0Cs6o7zu7iBb5bpbRVGeXTFdaxJaBq3ThKL4emR1cI"
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
 );
 
-// Secret key for JWT
-const JWT_SECRET = "your_secret_key"; // keep this safe
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Login route
 app.post("/login", async (req, res) => {
@@ -23,37 +23,20 @@ app.post("/login", async (req, res) => {
   email = email.trim().toLowerCase();
   password = password.trim();
 
-  console.log("Login attempt:", email, password);
+  console.log("Login attempt:", email);
 
   try {
-    // Fetch user from Supabase
     const { data: user, error } = await supabase
       .from("users")
       .select("*")
       .eq("email", email)
       .single();
 
-    console.log("User fetched:", user, "Error:", error);
+    if (error || !user) return res.status(401).json({ message: "Invalid credentials" });
+    if (user.password !== password) return res.status(401).json({ message: "Invalid credentials" });
 
-    if (error || !user) {
-      console.log("Login failed: user not found");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Compare password (plain text for now)
-    if (user.password !== password) {
-      console.log("Login failed: wrong password");
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Create JWT token
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    console.log("Login successful, token generated");
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+    console.log("Login successful for:", email);
     res.json({ token });
   } catch (err) {
     console.error("Login error:", err);
@@ -61,5 +44,17 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Start server
-app.listen(4000, () => console.log("Server running on port 4000"));
+// Pricelist route
+app.get("/pricelist", async (req, res) => {
+  try {
+    const { data, error } = await supabase.from("pricelist").select("*");
+    if (error) return res.status(500).json({ message: "Database fetch error" });
+    res.json(data);
+  } catch (err) {
+    console.error("Error fetching pricelist:", err.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));

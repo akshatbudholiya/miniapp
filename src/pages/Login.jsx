@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
@@ -34,9 +33,8 @@ function Login() {
     fetchTexts();
   }, [language]);
 
-  // Handle login via backend server
   const handleLogin = async () => {
-    setErrorMsg(""); // clear previous errors
+    setErrorMsg(""); 
     if (!email || !password) {
       setErrorMsg("Please enter email and password");
       return;
@@ -54,9 +52,7 @@ function Login() {
       if (!res.ok) {
         setErrorMsg(data.message);
       } else {
-        // Store JWT token in localStorage
         localStorage.setItem("jwt-token", data.token);
-        // Redirect to pricelist page
         navigate("/pricelist");
       }
     } catch (err) {
@@ -102,7 +98,6 @@ function Login() {
 
         {errorMsg && <p className="error-msg">{errorMsg}</p>}
 
-        {/* Language toggle */}
         <img
           src={
             language === "en"
