@@ -100,8 +100,8 @@ const Pricelist = () => {
         <div className="header-left">
           <button
             className="hamburger-btn"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             aria-label="Toggle menu"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           >
             <FaBars />
           </button>
@@ -109,7 +109,7 @@ const Pricelist = () => {
           <div className="user-info-header">
             <div className="user-avatar-wrapper">
               <img
-                src="https://i.pravatar.cc/40?u=john.andre"
+                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                 alt="User Avatar"
                 className="user-avatar"
               />
@@ -123,11 +123,11 @@ const Pricelist = () => {
         </div>
 
         <div className="language-selector">
-          Norsk Bokmal{" "}
+          Norsk Bokmål{" "}
           <img
+            src="https://flagcdn.com/w40/no.png"
+            alt="Norwegian Flag"
             className="flag-icon"
-            src="https://flagcdn.com/w20/no.png"
-            alt="Norwegian flag"
           />
         </div>
       </header>
@@ -168,7 +168,7 @@ const Pricelist = () => {
             )
           )}
         </nav>
-
+        
         {isSidebarOpen && (
           <div className="sidebar-overlay" onClick={overlayClickHandler}></div>
         )}

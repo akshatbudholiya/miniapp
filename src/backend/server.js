@@ -56,5 +56,30 @@ app.get("/pricelist", async (req, res) => {
   }
 });
 
+// Terms Route
+app.get("/terms/:lang", async (req, res) => {
+  const { lang } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("terms")
+      .select("language, title, content")
+      .eq("language", lang)
+      .single();
+
+    if (error || !data) {
+      return res.status(404).json({ message: "Terms not found" });
+    }
+
+    res.json(data);
+  } catch (err) {
+    console.error("Terms fetch error:", err);
+    res.status(500).json({ message: "Server error fetching terms" });
+  }
+});
+
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
