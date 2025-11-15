@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Terms.css";
+
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 const TermsPage = () => {
   const [lang, setLang] = useState("en");
