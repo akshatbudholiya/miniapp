@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "./src/lib/supabaseClient.js";
 import "./Login.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 function Login() {
   const [language, setLanguage] = useState("en");
   const [texts, setTexts] = useState({});
@@ -49,7 +50,7 @@ function Login() {
     }
 
     try {
-      const res = await fetch("http://localhost:4000/login", {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
