@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { createClient } from "@supabase/supabase-js";
 
 dotenv.config();
-
+console.log("Supabase URL: ", process.env.SUPABASE_URL ? "Set" : "Not Set");
 const app = express();
 const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 app.use(cors({ 
@@ -17,7 +17,9 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
-
+if (supabase) {
+    console.log("Supabase client initialized.");
+}
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // Login route
@@ -50,8 +52,11 @@ app.post("/login", async (req, res) => {
 // Pricelist route
 app.get("/pricelist", async (req, res) => {
   try {
+    console.log("Attempting to fetch pricelist data...");
     const { data, error } = await supabase.from("pricelist").select("*");
-    if (error) return res.status(500).json({ message: "Database fetch error" });
+    if (error)
+      console.error("Database fetch error on pricelist:", error.message);
+      return res.status(500).json({ message: "Database fetch error" });
     res.json(data);
   } catch (err) {
     console.error("Error fetching pricelist:", err.message);
