@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Terms.css";
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 const TermsPage = () => {
   const [lang, setLang] = useState("en");
   const [terms, setTerms] = useState(null);
@@ -12,8 +12,11 @@ const TermsPage = () => {
     async function fetchTerms() {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/terms/${lang}`);
-        if (!response.ok) throw new Error("Failed to load terms");
+        const response = await fetch(`${API_BASE_URL}/terms/${lang}`);
+         if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to load terms: ${response.status} - ${errorText.substring(0, 100)}...`);
+        }
         const data = await response.json();
         setTerms(data);
       } catch (err) {

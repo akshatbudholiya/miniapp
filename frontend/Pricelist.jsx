@@ -21,7 +21,7 @@ import {
   FaBars,
 } from "react-icons/fa";
 import "./Pricelist.css";
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 const menuItems = [
   { name: "Menu", heading: true },
   { name: "Invoices", icon: <FaFileInvoice /> },
@@ -64,9 +64,12 @@ const Pricelist = () => {
   const fetchPricelist = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:4000/pricelist");
-      if (!response.ok) throw new Error("Failed to load pricelist");
-      const data = await response.json();
+      const response = await fetch(`${API_BASE_URL}/pricelist`);
+
+      if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Failed to load pricelist: ${response.status} - ${errorText.substring(0, 100)}...`);
+      }      const data = await response.json();
       setItems(data && data.length > 0 ? data : [mockItem]);
     } catch (err) {
       setError(err.message);
