@@ -6,7 +6,7 @@ import "./Login.css";
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 function Login() {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("en"); // State controls the language
   const [texts, setTexts] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +14,7 @@ function Login() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // --- Omitted useEffects for brevity (they remain unchanged) ---
+  // EFFECT TO FETCH TEXTS (UNCHANGED - relies on 'language' state)
   useEffect(() => {
     const fetchTexts = async () => {
       const { data, error } = await supabase
@@ -31,6 +31,7 @@ function Login() {
     fetchTexts();
   }, [language]);
 
+  // EFFECT FOR MENU ESCAPE/BODY OVERFLOW (UNCHANGED)
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     const onKey = (e) => {
@@ -42,7 +43,6 @@ function Login() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
-  // --- End Omitted useEffects ---
 
   const handleLogin = async () => {
     setErrorMsg("");
@@ -76,10 +76,15 @@ function Login() {
     setTimeout(() => navigate(path), 80);
   };
 
+  // HANDLER TO TOGGLE LANGUAGE
+  const toggleLanguage = () => {
+    setLanguage((l) => (l === "en" ? "se" : "en"));
+  };
+
   return (
     <div className="login-page">
       <nav className="terms-nav" role="navigation" aria-label="Main navigation">
-        {/* HAMBURGER MOVED TO THE LEFT */}
+        {/* HAMBURGER (Left side) */}
         <button
           className="hamburger"
           onClick={() => setMenuOpen((s) => !s)}
@@ -91,20 +96,19 @@ function Login() {
           <span className={`bar ${menuOpen ? "open" : ""}`} />
         </button>
 
-        {/* LOGO REMOVED FROM NAVBAR - Desktop menu and mobile menu remain hidden/visible by CSS */}
-        {/* Desktop and Mobile language switch is consolidated and aligned right for mobile view */}
+        {/* LANGUAGE/FLAG (Right side) - Uses the new toggleLanguage handler */}
         <div className="nav-right-container">
           <span className="lang-text">{language === "en" ? "English" : "Svenska"}</span>
           <button
             className="lang-select"
-            onClick={() => setLanguage((l) => (l === "en" ? "se" : "en"))}
+            onClick={toggleLanguage} // *** FIXED: Using the handler to toggle state ***
             aria-label="Toggle language"
           >
             <img
               src={
                 language === "en"
-                  ? "https://storage.123fakturere.no/public/flags/GB.png"
-                  : "https://storage.123fakturere.no/public/flags/SE.png"
+                  ? "https://storage.123fakturere.no/public/flags/GB.png" // English flag
+                  : "https://storage.123fakturere.no/public/flags/SE.png" // Swedish flag
               }
               alt={language === "en" ? "English" : "Swedish"}
             />
@@ -112,7 +116,7 @@ function Login() {
         </div>
       </nav>
 
-      {/* Mobile overlay and menu remain unchanged */}
+      {/* Mobile overlay and menu remain for navigation links */}
       <div
         className={`mobile-overlay ${menuOpen ? "show" : ""}`}
         onClick={() => setMenuOpen(false)}
@@ -122,11 +126,11 @@ function Login() {
         <a onClick={() => closeMenuAndNavigate("/")}>Home</a>
         <a onClick={() => closeMenuAndNavigate("/pricelist")}>Price List</a>
         <a onClick={() => closeMenuAndNavigate("/terms")}>Terms</a>
-        {/* Simplified mobile language switch for this demo */}
+        {/* Mobile menu language switch (retained logic) */}
         <button
           className="mobile-lang"
           onClick={() => {
-            setLanguage((l) => (l === "en" ? "se" : "en"));
+            toggleLanguage(); // Use the toggle handler
             setMenuOpen(false);
           }}
         >
@@ -150,10 +154,9 @@ function Login() {
       />
 
       <div className="login-box" role="main">
-        {/* REMOVED LOGO: <img src="..." className="logo" /> */}
+        <h2 className="login-title">Log in</h2>
 
-        <h2 className="login-title">Log in</h2> {/* Custom class for styling */}
-
+        {/* INPUT GROUP 1: EMAIL (Placeholder/Label text is hardcoded in English for simplicity, but your texts object will eventually apply) */}
         <div className="input-group">
           <label htmlFor="email-input">Enter your email address</label>
           <input
@@ -166,6 +169,7 @@ function Login() {
           />
         </div>
 
+        {/* INPUT GROUP 2: PASSWORD */}
         <div className="input-group">
           <label htmlFor="password-input">Enter your password</label>
           <input
@@ -176,7 +180,6 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             aria-label="Password"
           />
-          {/* Eye icon for password visibility is a styling/UI detail, kept simple here */}
         </div>
 
         {errorMsg && <p className="error-msg">{errorMsg}</p>}
