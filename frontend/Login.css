@@ -242,11 +242,12 @@ input:focus {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center; /* centers desktop title / menu area */
+    justify-content: center; 
     padding: 0 20px;
+    z-index: 100;
   }
 
-  /* Force hamburger LEFT */
+  /* Hamburger stays fixed left */
   .hamburger {
     position: absolute;
     left: 20px;
@@ -254,15 +255,32 @@ input:focus {
     transform: translateY(-50%);
   }
 
-  /* Force flag RIGHT */
+  /* RIGHT SIDE LANGUAGE SECTION */
   .nav-right-container {
     position: absolute;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
-  /* Ensure desktop menu never shows */
+  /* Make language text smaller and aligned */
+  .lang-text {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Perfect flag size */
+  .lang-select img {
+    width: 22px;
+    height: auto;
+  }
+
+  /* Hide desktop menu completely */
   .desktop-menu {
     display: none !important;
   }
