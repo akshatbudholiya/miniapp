@@ -14,7 +14,7 @@ function Login() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // EFFECT TO FETCH TEXTS (UNCHANGED - relies on 'language' state)
+  // EFFECT TO FETCH TEXTS: Fetch data from Supabase whenever 'language' changes.
   useEffect(() => {
     const fetchTexts = async () => {
       const { data, error } = await supabase
@@ -26,10 +26,12 @@ function Login() {
         const dict = {};
         data.forEach((row) => (dict[row.key] = row.content));
         setTexts(dict);
+      } else {
+        console.error("Error fetching texts:", error);
       }
     };
     fetchTexts();
-  }, [language]);
+  }, [language]); // Dependency array ensures this runs on language change
 
   // EFFECT FOR MENU ESCAPE/BODY OVERFLOW (UNCHANGED)
   useEffect(() => {
@@ -47,7 +49,7 @@ function Login() {
   const handleLogin = async () => {
     setErrorMsg("");
     if (!email || !password) {
-      setErrorMsg("Please enter email and password");
+      setErrorMsg(texts.required_fields || "Please enter email and password");
       return;
     }
 
@@ -61,13 +63,13 @@ function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMsg(data.message || "Invalid credentials");
+        setErrorMsg(data.message || (texts.invalid_credentials || "Invalid credentials"));
       } else {
         localStorage.setItem("jwt-token", data.token);
         navigate("/pricelist");
       }
     } catch (err) {
-      setErrorMsg("Server error. Try again later.");
+      setErrorMsg(texts.server_error || "Server error. Try again later.");
     }
   };
 
@@ -96,19 +98,19 @@ function Login() {
           <span className={`bar ${menuOpen ? "open" : ""}`} />
         </button>
 
-        {/* LANGUAGE/FLAG (Right side) - Uses the new toggleLanguage handler */}
+        {/* LANGUAGE/FLAG (Right side) - Calls toggleLanguage, which updates state */}
         <div className="nav-right-container">
           <span className="lang-text">{language === "en" ? "English" : "Svenska"}</span>
           <button
             className="lang-select"
-            onClick={toggleLanguage} // *** FIXED: Using the handler to toggle state ***
+            onClick={toggleLanguage}
             aria-label="Toggle language"
           >
             <img
               src={
                 language === "en"
-                  ? "https://storage.123fakturere.no/public/flags/GB.png" // English flag
-                  : "https://storage.123fakturere.no/public/flags/SE.png" // Swedish flag
+                  ? "https://storage.123fakturere.no/public/flags/GB.png" 
+                  : "https://storage.123fakturere.no/public/flags/SE.png" 
               }
               alt={language === "en" ? "English" : "Swedish"}
             />
@@ -130,7 +132,7 @@ function Login() {
         <button
           className="mobile-lang"
           onClick={() => {
-            toggleLanguage(); // Use the toggle handler
+            toggleLanguage();
             setMenuOpen(false);
           }}
         >
@@ -154,15 +156,17 @@ function Login() {
       />
 
       <div className="login-box" role="main">
-        <h2 className="login-title">Log in</h2>
+        {/* USING texts.login for the title */}
+        <h2 className="login-title">{texts.login || "Log in"}</h2>
 
-        {/* INPUT GROUP 1: EMAIL (Placeholder/Label text is hardcoded in English for simplicity, but your texts object will eventually apply) */}
+        {/* INPUT GROUP 1: EMAIL */}
         <div className="input-group">
-          <label htmlFor="email-input">Enter your email address</label>
+          {/* USING texts.email_label for the label */}
+          <label htmlFor="email-input">{texts.email_label || "Enter your email address"}</label>
           <input
             id="email-input"
             type="email"
-            placeholder="Email address"
+            placeholder={texts.email_placeholder || "Email address"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             aria-label="Email"
@@ -171,11 +175,12 @@ function Login() {
 
         {/* INPUT GROUP 2: PASSWORD */}
         <div className="input-group">
-          <label htmlFor="password-input">Enter your password</label>
+          {/* USING texts.password_label for the label */}
+          <label htmlFor="password-input">{texts.password_label || "Enter your password"}</label>
           <input
             id="password-input"
             type="password"
-            placeholder="Password"
+            placeholder={texts.password_placeholder || "Password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             aria-label="Password"
@@ -184,16 +189,19 @@ function Login() {
 
         {errorMsg && <p className="error-msg">{errorMsg}</p>}
 
+        {/* USING texts.login for the button text */}
         <button className="login-btn" onClick={handleLogin}>
-          Log in
+          {texts.login || "Log in"}
         </button>
 
         <div className="login-footer-links">
+          {/* USING texts.register for the Register link */}
           <p className="register-link" onClick={() => navigate("/register")}>
-            Register
+            {texts.register || "Register"}
           </p>
+          {/* USING texts.forgot_password for the Forgot Password link */}
           <p className="forgot-password-link" onClick={() => navigate("/forgot-password")}>
-            Forgotten password?
+            {texts.forgot_password || "Forgotten password?"}
           </p>
         </div>
       </div>
