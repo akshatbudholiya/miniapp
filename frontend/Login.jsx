@@ -4,6 +4,7 @@ import { supabase } from "./src/lib/supabaseClient.js";
 import "./Login.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Login() {
   const [language, setLanguage] = useState("en");
   const [texts, setTexts] = useState({});
@@ -13,6 +14,7 @@ function Login() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  // --- Omitted useEffects for brevity (they remain unchanged) ---
   useEffect(() => {
     const fetchTexts = async () => {
       const { data, error } = await supabase
@@ -26,7 +28,6 @@ function Login() {
         setTexts(dict);
       }
     };
-
     fetchTexts();
   }, [language]);
 
@@ -41,6 +42,7 @@ function Login() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
+  // --- End Omitted useEffects ---
 
   const handleLogin = async () => {
     setErrorMsg("");
@@ -77,36 +79,7 @@ function Login() {
   return (
     <div className="login-page">
       <nav className="terms-nav" role="navigation" aria-label="Main navigation">
-        <img
-          src="https://storage.123fakturera.se/public/icons/diamond.png"
-          className="nav-logo"
-          alt="Logo"
-          onClick={() => navigate("/")}
-          style={{ cursor: "pointer" }}
-        />
-
-        <div className="desktop-menu nav-links" aria-hidden={menuOpen}>
-          <a onClick={() => navigate("/")}>Home</a>
-          <a onClick={() => navigate("/pricelist")}>Price List</a>
-          <a onClick={() => navigate("/terms")}>Terms</a>
-
-          <button
-            className="lang-select"
-            onClick={() => setLanguage((l) => (l === "en" ? "se" : "en"))}
-            aria-label="Toggle language"
-          >
-            <img
-              src={
-                language === "en"
-                  ? "https://storage.123fakturere.no/public/flags/SE.png"
-                  : "https://storage.123fakturere.no/public/flags/GB.png"
-              }
-              alt={language === "en" ? "Swedish" : "English"}
-            />
-            <span className="lang-code">{language === "en" ? "SE" : "EN"}</span>
-          </button>
-        </div>
-
+        {/* HAMBURGER MOVED TO THE LEFT */}
         <button
           className="hamburger"
           onClick={() => setMenuOpen((s) => !s)}
@@ -117,19 +90,39 @@ function Login() {
           <span className={`bar ${menuOpen ? "open" : ""}`} />
           <span className={`bar ${menuOpen ? "open" : ""}`} />
         </button>
+
+        {/* LOGO REMOVED FROM NAVBAR - Desktop menu and mobile menu remain hidden/visible by CSS */}
+        {/* Desktop and Mobile language switch is consolidated and aligned right for mobile view */}
+        <div className="nav-right-container">
+          <span className="lang-text">{language === "en" ? "English" : "Svenska"}</span>
+          <button
+            className="lang-select"
+            onClick={() => setLanguage((l) => (l === "en" ? "se" : "en"))}
+            aria-label="Toggle language"
+          >
+            <img
+              src={
+                language === "en"
+                  ? "https://storage.123fakturere.no/public/flags/GB.png"
+                  : "https://storage.123fakturere.no/public/flags/SE.png"
+              }
+              alt={language === "en" ? "English" : "Swedish"}
+            />
+          </button>
+        </div>
       </nav>
 
+      {/* Mobile overlay and menu remain unchanged */}
       <div
         className={`mobile-overlay ${menuOpen ? "show" : ""}`}
         onClick={() => setMenuOpen(false)}
         aria-hidden={!menuOpen}
       />
-
       <aside className={`mobile-menu ${menuOpen ? "show" : ""}`} aria-hidden={!menuOpen}>
         <a onClick={() => closeMenuAndNavigate("/")}>Home</a>
         <a onClick={() => closeMenuAndNavigate("/pricelist")}>Price List</a>
         <a onClick={() => closeMenuAndNavigate("/terms")}>Terms</a>
-
+        {/* Simplified mobile language switch for this demo */}
         <button
           className="mobile-lang"
           onClick={() => {
@@ -157,43 +150,49 @@ function Login() {
       />
 
       <div className="login-box" role="main">
-        <img
-          src="https://storage.123fakturera.se/public/icons/diamond.png"
-          alt="Logo"
-          className="logo"
-        />
+        {/* REMOVED LOGO: <img src="..." className="logo" /> */}
 
-        <h2>{texts.login}</h2>
+        <h2 className="login-title">Log in</h2> {/* Custom class for styling */}
 
-        <input
-          type="email"
-          placeholder={texts.email || "Email"}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          aria-label="Email"
-        />
+        <div className="input-group">
+          <label htmlFor="email-input">Enter your email address</label>
+          <input
+            id="email-input"
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            aria-label="Email"
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder={texts.password || "Password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          aria-label="Password"
-        />
-
-        <button className="login-btn" onClick={handleLogin}>
-          {texts.login || "Login"}
-        </button>
+        <div className="input-group">
+          <label htmlFor="password-input">Enter your password</label>
+          <input
+            id="password-input"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            aria-label="Password"
+          />
+          {/* Eye icon for password visibility is a styling/UI detail, kept simple here */}
+        </div>
 
         {errorMsg && <p className="error-msg">{errorMsg}</p>}
 
-        <p
-          className="terms-link"
-          onClick={() => navigate("/terms")}
-          style={{ cursor: "pointer", marginTop: "15px", textDecoration: "underline" }}
-        >
-          {texts.terms || "Terms & Conditions"}
-        </p>
+        <button className="login-btn" onClick={handleLogin}>
+          Log in
+        </button>
+
+        <div className="login-footer-links">
+          <p className="register-link" onClick={() => navigate("/register")}>
+            Register
+          </p>
+          <p className="forgot-password-link" onClick={() => navigate("/forgot-password")}>
+            Forgotten password?
+          </p>
+        </div>
       </div>
     </div>
   );

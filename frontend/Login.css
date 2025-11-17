@@ -1,10 +1,11 @@
+/* GLOBAL STYLES (Kept mostly the same) */
 body, #root {
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100vw;
-  overflow-x: hidden;  
-  overflow-y: auto;     
+  overflow-x: hidden;
+  overflow-y: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -19,6 +20,7 @@ body.menu-open {
   overflow: visible;
 }
 
+/* NAVIGATION CHANGES */
 .terms-nav {
   position: fixed;
   top: 0;
@@ -27,52 +29,42 @@ body.menu-open {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Space out hamburger and language */
   padding: 0 25px;
   z-index: 100;
 }
 
-.nav-logo {
-  height: 45px;
-  cursor: pointer;
+.nav-logo, .desktop-menu {
+  /* Hiding elements that are not in the desired header (desktop menu not needed on mobile view) */
+  display: none;
 }
 
-.desktop-menu {
+.nav-right-container {
   display: flex;
   align-items: center;
-  gap: 20px;
-}
-
-.desktop-menu a {
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
-
-.desktop-menu a:hover {
-  opacity: 0.7;
-}
-
-.lang-select {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
+  gap: 10px;
+  color: #fff;
   font-weight: 600;
 }
 
+.lang-select {
+  /* Removed text from lang-select button, only showing flag */
+  display: flex;
+  align-items: center;
+  background: none; /* Transparent background */
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
 .lang-select img {
-  width: 18px;
+  width: 25px; /* Slightly larger flag */
+  border-radius: 4px;
 }
 
 .hamburger {
-  display: none;
+  display: flex; /* Always show hamburger on mobile */
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -80,16 +72,16 @@ body.menu-open {
   border: none;
   cursor: pointer;
   z-index: 101;
-  margin-right: 15px;
+  margin-left: -10px; /* Adjust spacing */
 }
 
 .bar {
   width: 26px;
   height: 3px;
-  background: white;
+  background: black; /* Changed to black for contrast against light background */
   transition: 0.3s;
 }
-
+/* Hamburger animation styles remain */
 .bar.open:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -102,94 +94,81 @@ body.menu-open {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  height: 100vh;
-  width: 70%;
-  max-width: 320px;
-  background: rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  padding-top: 100px;
-  padding-left: 35px;
-  gap: 25px;
-  transition: right 0.3s ease-in-out;
-  z-index: 1000;
-}
-
-.mobile-menu.show {
-  right: 0;
-}
-
-.mobile-menu a {
-  color: white;
-  font-size: 20px;
-  text-decoration: none;
-}
-
-.mobile-lang {
-  background: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
+/* BACKGROUND IMAGE */
 .background-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.85);
+  filter: brightness(0.95); /* Brightened the filter */
   z-index: 0;
 }
 
+/* LOGIN BOX STYLES (Form container) */
 .login-box {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.92);
-  padding: 45px 40px;
+  background: rgba(255, 255, 255, 0.98); /* Less transparent */
+  padding: 45px 30px; /* Reduced horizontal padding */
   border-radius: 30px;
-  width: 70%;
+  width: 85%; /* Slightly wider on mobile */
   max-width: 420px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: left; /* Alignment changed to left for labels */
   z-index: 10;
   backdrop-filter: blur(5px);
 }
 
+/* Hiding the large diamond logo class */
 .logo {
-  width: 90px;
-  margin-bottom: 25px;
+  display: none;
+}
+
+/* TITLE STYLING */
+.login-title {
+  color: #cc0000; /* Red color from desired UI */
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* INPUT GROUP STYLES (For labels and spacing) */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
 }
 
 input[type="email"],
 input[type="password"] {
-  width: 90%;
+  width: 100%;
   padding: 14px 14px;
-  margin-bottom: 20px;
+  /* Removed margin-bottom here as it's handled by .input-group */
   border: 1.8px solid #d1d5db;
   border-radius: 30px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: #222;
-  transition: border-color 0.3s ease;
+  box-sizing: border-box; /* Crucial for width: 100% with padding */
 }
 
 input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 5px #2563ebaa;
+  border-color: #009a15; /* Focus color matching the button */
+  box-shadow: 0 0 5px rgba(0, 154, 21, 0.6);
 }
 
+/* BUTTON STYLING */
 .login-btn {
   width: 100%;
   padding: 14px 0;
@@ -197,36 +176,64 @@ input:focus {
   border: none;
   border-radius: 30px;
   color: white;
-  font-size: 17px;
+  font-size: 18px; /* Slightly larger font */
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(0, 154, 21, 0.6);
+  margin-top: 15px; /* Added margin above the button */
+  margin-bottom: 20px; /* Added margin below the button */
 }
 
 .login-btn:hover {
   background-color: #008313;
 }
 
-.terms-link {
-  margin-top: 20px;
-  font-size: 13px;
+/* FOOTER LINKS STYLING */
+.login-footer-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
   font-weight: 600;
+}
+
+.register-link,
+.forgot-password-link {
   color: #0c4a6e;
   cursor: pointer;
+  text-decoration: none; /* Removed underline by default */
+  margin: 0;
+  padding: 0;
+}
+
+.register-link:hover,
+.forgot-password-link:hover {
   text-decoration: underline;
 }
 
 .error-msg {
+  text-align: center;
   margin-top: 12px;
   color: #d32f2f;
   font-weight: 600;
 }
 
-@media (max-width: 768px) {
+/* MEDIA QUERIES (Updated to consolidate mobile views) */
+@media (min-width: 769px) {
+  /* Show desktop menu items only on larger screens */
   .desktop-menu {
-    display: none;
-  }
-  .hamburger {
     display: flex;
   }
+  .hamburger {
+    display: none;
+  }
+  .nav-right-container {
+    display: none; /* Hiding the mobile language display on desktop */
+  }
+}
+@media (max-width: 768px) {
+    /* Ensure the hamburger and language selector are correctly displayed on mobile */
+    .terms-nav {
+      justify-content: space-between;
+    }
 }
