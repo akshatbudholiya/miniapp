@@ -32,10 +32,7 @@ body.menu-open {
   z-index: 100;
 }
 
-/* .nav-logo, .desktop-menu {
-  display: none;
-} */
-
+/* NAV RIGHT SECTION */
 .nav-right-container {
   display: flex;
   align-items: center;
@@ -45,21 +42,20 @@ body.menu-open {
 }
 
 .lang-select {
-  /* Removed text from lang-select button, only showing flag */
   display: flex;
   align-items: center;
-  background: none; /* Transparent background */
+  background: none;
   border: none;
   padding: 0;
-  border-radius: 0;
   cursor: pointer;
 }
 
 .lang-select img {
-  width: 25px; /* Slightly larger flag */
+  width: 25px;
   border-radius: 4px;
 }
 
+/* DESKTOP MENU */
 .desktop-menu {
   display: none;
   gap: 25px;
@@ -78,6 +74,7 @@ body.menu-open {
   text-decoration: underline;
 }
 
+/* HAMBURGER */
 .hamburger {
   display: flex;
   flex-direction: column;
@@ -95,15 +92,14 @@ body.menu-open {
   background: black;
   transition: 0.3s;
 }
-/* Hamburger animation styles remain */
+
+/* Hamburger animation */
 .bar.open:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
-
 .bar.open:nth-child(2) {
   opacity: 0;
 }
-
 .bar.open:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
 }
@@ -115,43 +111,37 @@ body.menu-open {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.95); /* Brightened the filter */
+  filter: brightness(0.95);
   z-index: 0;
 }
 
-/* LOGIN BOX STYLES (Form container) */
+/* LOGIN BOX */
 .login-box {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.98); /* Less transparent */
-  padding: 45px 30px; /* Reduced horizontal padding */
+  background: rgba(255, 255, 255, 0.98);
+  padding: 45px 30px;
   border-radius: 30px;
-  width: 70%; /* Slightly wider on mobile */
+  width: 70%;
   max-width: 420px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  text-align: left; /* Alignment changed to left for labels */
+  text-align: left;
   z-index: 10;
   backdrop-filter: blur(5px);
 }
 
-/* Hiding the large diamond logo class */
-.logo {
-  display: none;
-}
-
-/* TITLE STYLING */
+/* TITLE */
 .login-title {
-  color: #cc0000; /* Red color from desired UI */
+  color: #cc0000;
   font-size: 28px;
   font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 30px;
+  margin: 0 0 30px;
   text-align: center;
 }
 
-/* INPUT GROUP STYLES (For labels and spacing) */
+/* INPUT GROUP */
 .input-group {
   margin-bottom: 20px;
 }
@@ -167,22 +157,21 @@ body.menu-open {
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 14px 14px;
-  /* Removed margin-bottom here as it's handled by .input-group */
+  padding: 14px;
   border: 1.8px solid #d1d5db;
   border-radius: 30px;
   font-size: 16px;
   font-weight: 500;
   color: #222;
-  box-sizing: border-box; /* Crucial for width: 100% with padding */
+  box-sizing: border-box;
 }
 
 input:focus {
-  border-color: #009a15; /* Focus color matching the button */
+  border-color: #009a15;
   box-shadow: 0 0 5px rgba(0, 154, 21, 0.6);
 }
 
-/* BUTTON STYLING */
+/* BUTTON */
 .login-btn {
   width: 100%;
   padding: 14px 0;
@@ -190,23 +179,21 @@ input:focus {
   border: none;
   border-radius: 30px;
   color: white;
-  font-size: 18px; /* Slightly larger font */
+  font-size: 18px;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 5px 15px rgba(0, 154, 21, 0.6);
-  margin-top: 15px; /* Added margin above the button */
-  margin-bottom: 20px; /* Added margin below the button */
+  margin: 15px 0 20px;
 }
 
 .login-btn:hover {
   background-color: #008313;
 }
 
-/* FOOTER LINKS STYLING */
+/* FOOTER LINKS */
 .login-footer-links {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   font-size: 14px;
   font-weight: 600;
 }
@@ -214,10 +201,7 @@ input:focus {
 .register-link,
 .forgot-password-link {
   color: #0c4a6e;
-  cursor: pointer;
-  text-decoration: none; /* Removed underline by default */
-  margin: 0;
-  padding: 0;
+  text-decoration: none;
 }
 
 .register-link:hover,
@@ -246,19 +230,36 @@ input:focus {
   .desktop-menu {
     display: flex;
   }
-
-  .nav-right-container {
-    display: flex;
-  }
 }
 
-/* MOBILE VIEW */
+/* MOBILE VIEW — FIXED NAVBAR POSITIONS */
 @media (max-width: 768px) {
-  .desktop-menu {
-    display: none;
+  .terms-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    height: 70px;
   }
 
+  /* Force hamburger left */
   .hamburger {
-    display: flex;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Force flag right */
+  .nav-right-container {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Desktop menu must NOT affect layout */
+  .desktop-menu {
+    display: none !important;
   }
 }
