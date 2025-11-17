@@ -275,7 +275,7 @@ input:focus {
     margin: 0 !important;
     padding: 0 !important;
     height: auto;
-    margin-right: 10px; /* Add right margin for spacing */
+    margin-right: 30px; /* Add right margin for spacing */
   }
 
   .lang-text {
