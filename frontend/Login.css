@@ -69,7 +69,7 @@ body.menu-open {
   border: none;
   cursor: pointer;
   z-index: 101;
-  margin-left: -10px; /* Adjust spacing */
+  margin-left: 10px; /* Adjust spacing */
 }
 
 .bar {
