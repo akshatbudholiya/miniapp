@@ -267,20 +267,17 @@ input:focus {
     gap: 6px;
   }
 
-  /* Make language text smaller and aligned */
   .lang-text {
     font-size: 14px;
     margin: 0;
     padding: 0;
   }
 
-  /* Perfect flag size */
   .lang-select img {
     width: 22px;
     height: auto;
   }
 
-  /* Hide desktop menu completely */
   .desktop-menu {
     display: none !important;
   }
