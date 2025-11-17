@@ -60,8 +60,26 @@ body.menu-open {
   border-radius: 4px;
 }
 
+.desktop-menu {
+  display: none;
+  gap: 25px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.desktop-menu a {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.desktop-menu a:hover {
+  text-decoration: underline;
+}
+
 .hamburger {
-  display: flex; /* Always show hamburger on mobile */
+  display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -69,13 +87,12 @@ body.menu-open {
   border: none;
   cursor: pointer;
   z-index: 101;
-  margin-left: 10px; /* Adjust spacing */
 }
 
 .bar {
   width: 26px;
   height: 3px;
-  background: black; /* Changed to black for contrast against light background */
+  background: black;
   transition: 0.3s;
 }
 /* Hamburger animation styles remain */
@@ -215,22 +232,33 @@ input:focus {
   font-weight: 600;
 }
 
-/* MEDIA QUERIES (Updated to consolidate mobile views) */
+/* DESKTOP VIEW */
 @media (min-width: 769px) {
-  /* Show desktop menu items only on larger screens */
-  .desktop-menu {
-    display: flex;
-  }
   .hamburger {
     display: none;
   }
-  /* .nav-right-container {
-    display: none;
-  } */
+
+  .mobile-overlay,
+  .mobile-menu {
+    display: none !important;
+  }
+
+  .desktop-menu {
+    display: flex;
+  }
+
+  .nav-right-container {
+    display: flex;
+  }
 }
+
+/* MOBILE VIEW */
 @media (max-width: 768px) {
-    /* Ensure the hamburger and language selector are correctly displayed on mobile */
-    .terms-nav {
-      justify-content: space-between;
-    }
+  .desktop-menu {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
 }

@@ -103,6 +103,13 @@ function Login() {
           <span className={`bar ${menuOpen ? "open" : ""}`} />
         </button>
 
+        <div className="desktop-menu">
+          <a onClick={() => navigate("/")}>{texts.home || "Home"}</a>
+          <a onClick={() => navigate("/pricelist")}>{texts.pricelist || "Price List"}</a>
+          <a onClick={() => navigate("/terms")}>{texts.terms || "Terms"}</a>
+        </div>
+
+
         <div className="nav-right-container">
           <span className="lang-text">{language === "en" ? "English" : "Svenska"}</span>
           <button
