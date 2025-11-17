@@ -1,39 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "./src/lib/supabaseClient.js";
+// Assuming you have imported and configured your supabase client in this path
+import { supabase } from "./src/lib/supabaseClient.js"; 
 import "./Login.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 function Login() {
-  const [language, setLanguage] = useState("en"); // State controls the language
-  const [texts, setTexts] = useState({});
+  const [language, setLanguage] = useState("en"); 
+  const [texts, setTexts] = useState({}); // Stores key/content translations
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // EFFECT TO FETCH TEXTS: Fetch data from Supabase whenever 'language' changes.
+  // 1. EFFECT TO FETCH TEXTS: Runs when the 'language' state changes.
   useEffect(() => {
     const fetchTexts = async () => {
       const { data, error } = await supabase
         .from("texts")
-        .select("key, content")
+        .select("key, content") 
         .eq("language", language);
 
       if (!error && Array.isArray(data)) {
         const dict = {};
+        // Convert the array of {key, content} objects into a single dictionary
         data.forEach((row) => (dict[row.key] = row.content));
         setTexts(dict);
       } else {
-        console.error("Error fetching texts:", error);
+        console.error("Error fetching translations:", error);
+        setTexts({}); 
       }
     };
     fetchTexts();
-  }, [language]); // Dependency array ensures this runs on language change
+  }, [language]); 
 
-  // EFFECT FOR MENU ESCAPE/BODY OVERFLOW (UNCHANGED)
+  // 2. EFFECT FOR MENU ESCAPE/BODY OVERFLOW 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     const onKey = (e) => {
@@ -46,6 +49,7 @@ function Login() {
     };
   }, [menuOpen]);
 
+  // 3. HANDLER FOR LOGIN SUBMISSION
   const handleLogin = async () => {
     setErrorMsg("");
     if (!email || !password) {
@@ -78,10 +82,19 @@ function Login() {
     setTimeout(() => navigate(path), 80);
   };
 
-  // HANDLER TO TOGGLE LANGUAGE
+  // 4. HANDLER TO TOGGLE LANGUAGE
   const toggleLanguage = () => {
     setLanguage((l) => (l === "en" ? "se" : "en"));
   };
+
+  // Determine flag images dynamically
+  const currentFlag = language === "en" 
+    ? "https://storage.123fakturere.no/public/flags/GB.png" 
+    : "https://storage.123fakturere.no/public/flags/SE.png";
+  
+  const mobileSwitchFlag = language === "en" 
+    ? "https://storage.123fakturere.no/public/flags/SE.png"
+    : "https://storage.123fakturere.no/public/flags/GB.png";
 
   return (
     <div className="login-page">
@@ -98,7 +111,7 @@ function Login() {
           <span className={`bar ${menuOpen ? "open" : ""}`} />
         </button>
 
-        {/* LANGUAGE/FLAG (Right side) - Calls toggleLanguage, which updates state */}
+        {/* LANGUAGE/FLAG (Right side) - Toggles language and triggers Supabase fetch */}
         <div className="nav-right-container">
           <span className="lang-text">{language === "en" ? "English" : "Svenska"}</span>
           <button
@@ -106,29 +119,23 @@ function Login() {
             onClick={toggleLanguage}
             aria-label="Toggle language"
           >
-            <img
-              src={
-                language === "en"
-                  ? "https://storage.123fakturere.no/public/flags/GB.png" 
-                  : "https://storage.123fakturere.no/public/flags/SE.png" 
-              }
-              alt={language === "en" ? "English" : "Swedish"}
-            />
+            <img src={currentFlag} alt={language === "en" ? "English" : "Swedish"} />
           </button>
         </div>
       </nav>
 
-      {/* Mobile overlay and menu remain for navigation links */}
+      {/* Mobile overlay and menu */}
       <div
         className={`mobile-overlay ${menuOpen ? "show" : ""}`}
         onClick={() => setMenuOpen(false)}
         aria-hidden={!menuOpen}
       />
       <aside className={`mobile-menu ${menuOpen ? "show" : ""}`} aria-hidden={!menuOpen}>
-        <a onClick={() => closeMenuAndNavigate("/")}>Home</a>
-        <a onClick={() => closeMenuAndNavigate("/pricelist")}>Price List</a>
-        <a onClick={() => closeMenuAndNavigate("/terms")}>Terms</a>
-        {/* Mobile menu language switch (retained logic) */}
+        {/* Navigation links using translation keys */}
+        <a onClick={() => closeMenuAndNavigate("/")}>{texts.home || "Home"}</a>
+        <a onClick={() => closeMenuAndNavigate("/pricelist")}>{texts.pricelist || "Price List"}</a>
+        <a onClick={() => closeMenuAndNavigate("/terms")}>{texts.terms || "Terms"}</a>
+        
         <button
           className="mobile-lang"
           onClick={() => {
@@ -136,15 +143,7 @@ function Login() {
             setMenuOpen(false);
           }}
         >
-          <img
-            src={
-              language === "en"
-                ? "https://storage.123fakturere.no/public/flags/SE.png"
-                : "https://storage.123fakturere.no/public/flags/GB.png"
-            }
-            alt="flag"
-            style={{ width: 20 }}
-          />
+          <img src={mobileSwitchFlag} alt="flag" style={{ width: 20 }} />
           <span>{language === "en" ? "Switch to Swedish" : "Switch to English"}</span>
         </button>
       </aside>
@@ -156,12 +155,11 @@ function Login() {
       />
 
       <div className="login-box" role="main">
-        {/* USING texts.login for the title */}
+        {/* Title using texts.login */}
         <h2 className="login-title">{texts.login || "Log in"}</h2>
 
         {/* INPUT GROUP 1: EMAIL */}
         <div className="input-group">
-          {/* USING texts.email_label for the label */}
           <label htmlFor="email-input">{texts.email_label || "Enter your email address"}</label>
           <input
             id="email-input"
@@ -175,7 +173,6 @@ function Login() {
 
         {/* INPUT GROUP 2: PASSWORD */}
         <div className="input-group">
-          {/* USING texts.password_label for the label */}
           <label htmlFor="password-input">{texts.password_label || "Enter your password"}</label>
           <input
             id="password-input"
@@ -189,17 +186,16 @@ function Login() {
 
         {errorMsg && <p className="error-msg">{errorMsg}</p>}
 
-        {/* USING texts.login for the button text */}
+        {/* Button using texts.login */}
         <button className="login-btn" onClick={handleLogin}>
           {texts.login || "Log in"}
         </button>
 
+        {/* FOOTER LINKS */}
         <div className="login-footer-links">
-          {/* USING texts.register for the Register link */}
           <p className="register-link" onClick={() => navigate("/register")}>
             {texts.register || "Register"}
           </p>
-          {/* USING texts.forgot_password for the Forgot Password link */}
           <p className="forgot-password-link" onClick={() => navigate("/forgot-password")}>
             {texts.forgot_password || "Forgotten password?"}
           </p>
