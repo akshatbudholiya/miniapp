@@ -111,7 +111,7 @@ body.menu-open {
   background: rgba(255, 255, 255, 0.98); /* Less transparent */
   padding: 45px 30px; /* Reduced horizontal padding */
   border-radius: 30px;
-  width: 85%; /* Slightly wider on mobile */
+  width: 70%; /* Slightly wider on mobile */
   max-width: 420px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   text-align: left; /* Alignment changed to left for labels */
@@ -120,9 +120,9 @@ body.menu-open {
 }
 
 /* Hiding the large diamond logo class */
-/* .logo {
+.logo {
   display: none;
-} */
+}
 
 /* TITLE STYLING */
 .login-title {
