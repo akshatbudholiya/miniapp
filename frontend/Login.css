@@ -1,4 +1,3 @@
-/* GLOBAL STYLES (Kept mostly the same) */
 body, #root {
   margin: 0;
   padding: 0;
@@ -20,7 +19,6 @@ body.menu-open {
   overflow: visible;
 }
 
-/* NAVIGATION CHANGES */
 .terms-nav {
   position: fixed;
   top: 0;
@@ -29,15 +27,14 @@ body.menu-open {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Space out hamburger and language */
+  justify-content: space-between;
   padding: 0 25px;
   z-index: 100;
 }
 
-.nav-logo, .desktop-menu {
-  /* Hiding elements that are not in the desired header (desktop menu not needed on mobile view) */
+/* .nav-logo, .desktop-menu {
   display: none;
-}
+} */
 
 .nav-right-container {
   display: flex;
@@ -123,9 +120,9 @@ body.menu-open {
 }
 
 /* Hiding the large diamond logo class */
-.logo {
+/* .logo {
   display: none;
-}
+} */
 
 /* TITLE STYLING */
 .login-title {
@@ -227,9 +224,9 @@ input:focus {
   .hamburger {
     display: none;
   }
-  .nav-right-container {
-    display: none; /* Hiding the mobile language display on desktop */
-  }
+  /* .nav-right-container {
+    display: none;
+  } */
 }
 @media (max-width: 768px) {
     /* Ensure the hamburger and language selector are correctly displayed on mobile */
