@@ -128,7 +128,7 @@ body.menu-open {
   background: rgba(255, 255, 255, 0.98);
   padding: 45px 30px;
   border-radius: 30px;
-  width: 90%; /* Increased width responsiveness */
+  width: 70%; /* Increased width responsiveness */
   max-width: 420px;
   max-height: 90vh; /* Added max height for better landscape fit */
   overflow-y: auto; /* Enable scrolling if content taller */
@@ -275,7 +275,7 @@ input:focus {
     margin: 0 !important;
     padding: 0 !important;
     height: auto;
-    margin-right: 300px; /* Add right margin for spacing */
+    margin-right: 10px; /* Add right margin for spacing */
   }
 
   .lang-text {
@@ -290,6 +290,7 @@ input:focus {
     vertical-align: middle !important;
     border-radius: 4px;
     margin-left: 2px !important;
+    margin-right: 30px;
   }
 
   /* Landscape mode adjustments */
