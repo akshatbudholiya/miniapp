@@ -238,11 +238,15 @@ input:focus {
     position: fixed;
     top: 0;
     left: 0;
-    justify-content: center;
     height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* centers desktop title / menu area */
+    padding: 0 20px;
   }
 
-  /* Force hamburger left */
+  /* Force hamburger LEFT */
   .hamburger {
     position: absolute;
     left: 20px;
@@ -250,7 +254,7 @@ input:focus {
     transform: translateY(-50%);
   }
 
-  /* Force flag right */
+  /* Force flag RIGHT */
   .nav-right-container {
     position: absolute;
     right: 20px;
@@ -258,7 +262,7 @@ input:focus {
     transform: translateY(-50%);
   }
 
-  /* Desktop menu must NOT affect layout */
+  /* Ensure desktop menu never shows */
   .desktop-menu {
     display: none !important;
   }
