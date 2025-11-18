@@ -22,13 +22,13 @@ body.menu-open {
 .terms-nav {
   position: relative;
   top: 0;
-  left: 0px;
+  left: 220px;
   height: 70px;
   width: 100%;
   display: flex;
-  /* align-items: center; */
-  justify-content: space-between;
-  padding: 0 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
   z-index: 100;
 }
 
@@ -46,7 +46,7 @@ body.menu-open {
   gap: 10px;
   color: #fff;
   font-weight: 600;
-  margin-right: 10px; /* Add right margin so text doesn't cling to edge */
+  margin-right: 10px;
 }
 
 .lang-select {
