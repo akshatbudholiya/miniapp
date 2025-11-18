@@ -22,7 +22,8 @@ body.menu-open {
 .terms-nav {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 10px;
+  right: 0px;
   height: 70px;
   width: 100%;
   display: flex;
@@ -30,6 +31,12 @@ body.menu-open {
   justify-content: space-between;
   padding: 0 25px;
   z-index: 100;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+  margin-left: 10px;
 }
 
 /* NAV RIGHT SECTION */
