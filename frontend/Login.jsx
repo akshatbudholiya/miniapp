@@ -138,6 +138,8 @@ function Login() {
         </button>
       </aside>
 
+      <div className="page-padding"></div>
+
       <img
         src="https://storage.123fakturera.se/public/wallpapers/sverige43.jpg"
         className="background-image"

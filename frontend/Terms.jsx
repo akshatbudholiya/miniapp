@@ -13,7 +13,7 @@ const TermsPage = () => {
     async function fetchTerms() {
       try {
         setLoading(true);
-        const response = await fetch(`${API_BASE_URL}/terms/${lang}`);
+         const response = await fetch(`${API_BASE_URL}/terms/${lang}`);
          if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Failed to load terms: ${response.status} - ${errorText.substring(0, 100)}...`);
