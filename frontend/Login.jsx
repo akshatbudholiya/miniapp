@@ -92,6 +92,11 @@ function Login() {
   return (
     <div className="login-page">
       <nav className="terms-nav" role="navigation" aria-label="Main navigation">
+        <img
+          src="https://storage.123fakturera.se/public/icons/diamond.png"
+          alt="Logo"
+          className="nav-logo"
+        />
         <button
           className="hamburger"
           onClick={() => setMenuOpen((s) => !s)}

@@ -238,14 +238,12 @@ input:focus {
     display: flex;
   }
 
-  /* --- IMPROVED HEADER SPACING & LANDSCAPE RESPONSIVENESS --- */
-  /* Add more space between header and login box for desktop/tablet */
   .login-box {
-    top: 54%; /* Move login box slightly lower */
+    top: 54%;
   }
-  .terms-nav {
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07); /* subtle shadow for separation */
-  }
+  /* .terms-nav {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  } */
 }
 
 /* TABLET VIEW */
