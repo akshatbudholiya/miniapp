@@ -1,4 +1,3 @@
-/* RESET */
 body, #root {
   margin: 0;
   padding: 0;
@@ -13,7 +12,6 @@ body.menu-open {
   overflow: hidden;
 }
 
-/* PAGE */
 .login-page {
   position: relative;
   height: 100vh;
@@ -21,7 +19,6 @@ body.menu-open {
   overflow: visible;
 }
 
-/* NAVBAR */
 .terms-nav {
   position: fixed;
   top: 0;
@@ -35,9 +32,47 @@ body.menu-open {
   z-index: 100;
 }
 
-/* FIX: create spacing so login-box does NOT touch header */
-.page-padding {
-  height: 70px;
+/* NAV RIGHT SECTION */
+.nav-right-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-weight: 600;
+  margin-right: 10px; /* Add right margin so text doesn't cling to edge */
+}
+
+.lang-select {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.lang-select img {
+  width: 25px;
+  border-radius: 4px;
+}
+
+/* DESKTOP MENU */
+.desktop-menu {
+  display: none;
+  gap: 25px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.desktop-menu a {
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.desktop-menu a:hover {
+  text-decoration: underline;
 }
 
 /* HAMBURGER */
@@ -55,13 +90,14 @@ body.menu-open {
   align-items: center;
 }
 
-/* SAME UI AS BEFORE */
 .bar {
   width: 26px;
   height: 3px;
   background: black;
   transition: 0.3s;
 }
+
+/* Hamburger animation */
 .bar.open:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -86,24 +122,23 @@ body.menu-open {
 /* LOGIN BOX */
 .login-box {
   position: absolute;
-  top: calc(70px + 40px); /* FIXED: pushed down from header */
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.98);
   padding: 45px 30px;
   border-radius: 30px;
-  width: 70%;
+  width: 70%; /* Increased width responsiveness */
   max-width: 420px;
-  max-height: 90vh;
-  overflow-y: auto;
+  max-height: 90vh; /* Added max height for better landscape fit */
+  overflow-y: auto; /* Enable scrolling if content taller */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   text-align: left;
   z-index: 10;
   backdrop-filter: blur(5px);
 }
 
-/* ---- NO CHANGES TO UI BELOW ---- */
-
+/* TITLE */
 .login-title {
   color: #cc0000;
   font-size: 28px;
@@ -112,6 +147,7 @@ body.menu-open {
   text-align: center;
 }
 
+/* INPUT GROUP */
 .input-group {
   margin-bottom: 20px;
 }
@@ -141,6 +177,7 @@ input:focus {
   box-shadow: 0 0 5px rgba(0, 154, 21, 0.6);
 }
 
+/* BUTTON */
 .login-btn {
   width: 100%;
   padding: 14px 0;
@@ -159,6 +196,7 @@ input:focus {
   background-color: #008313;
 }
 
+/* FOOTER LINKS */
 .login-footer-links {
   display: flex;
   justify-content: space-between;
@@ -185,19 +223,119 @@ input:focus {
   font-weight: 600;
 }
 
-/* DESKTOP FIX */
+/* DESKTOP VIEW */
 @media (min-width: 769px) {
-  .login-box {
-    top: calc(70px + 60px); /* more spacing on desktop */
+  .hamburger {
+    display: none;
+  }
+
+  .mobile-overlay,
+  .mobile-menu {
+    display: none !important;
+  }
+
+  .desktop-menu {
+    display: flex;
   }
 }
 
-/* MOBILE LANDSCAPE FIX */
-@media (max-width: 768px) and (orientation: landscape) {
-  .login-box {
-    top: calc(70px + 20px) !important; /* shift down for landscape */
-    max-height: 75vh;
-    padding: 30px 25px;
-    width: 80%;
+/* MOBILE — ALIGNMENT FIX */
+@media (max-width: 768px) {
+
+  .terms-nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 70px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 20px !important;
+    z-index: 200 !important;
+  }
+
+  .hamburger {
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+  }
+
+  .nav-right-container {
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto;
+    margin-right: 10px; /* Add right margin for spacing */
+  }
+
+  .lang-text {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: normal !important;
+  }
+
+  .lang-select img {
+    width: 24px !important;
+    height: 24px !important;
+    vertical-align: middle !important;
+    border-radius: 4px;
+    margin-left: 2px !important;
+    margin-right: 30px;
+  }
+
+  /* Landscape mode adjustments */
+  @media (orientation: landscape) {
+    .login-box {
+      width: 80%;
+      max-width: 400px;
+      padding: 30px 25px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .terms-nav {
+      height: 60px !important;
+      padding: 0 15px !important;
+    }
+
+    .hamburger {
+      height: 26px;
+      width: 26px;
+    }
+
+    .nav-right-container {
+      font-size: 13px !important;
+      gap: 5px !important;
+    }
+
+    .lang-select img {
+      width: 22px !important;
+      height: 22px !important;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .login-btn {
+      font-size: 16px;
+      padding: 12px 0;
+    }
+
+    .login-footer-links {
+      font-size: 12px;
+    }
   }
 }
