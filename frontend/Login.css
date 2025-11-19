@@ -420,9 +420,9 @@ input:focus {
     }
   }
 
-  /* --- EXTRA: Prevent overlap for all views --- */
-  /* .terms-nav {
+  /* --- EXTRA: Prevent overlap for all views ---  */
+   .terms-nav {
     background: transparent !important;
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-  } */
+  }
 }
