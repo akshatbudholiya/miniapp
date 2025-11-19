@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "./src/lib/supabaseClient.js"; 
+import { supabase } from "./lib/supabaseClient"; 
 import "./Login.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -92,11 +92,12 @@ function Login() {
   return (
     <div className="login-page">
       <nav className="terms-nav" role="navigation" aria-label="Main navigation">
-        <img
+        <div className="img-logo"><img
           src="https://storage.123fakturera.se/public/icons/diamond.png"
           alt="Logo"
           className="nav-logo"
         />
+        </div>
         <button
           className="hamburger"
           onClick={() => setMenuOpen((s) => !s)}
