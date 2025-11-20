@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "./lib/supabaseClient"; 
+import { supabase } from "frontend/src/lib/supabaseClient"; 
 import "./Login.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
